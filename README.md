@@ -26,4 +26,27 @@ A simple Java Kafka producer.
 ## Code
 
 ```java
+String server = "<you.server.ip.address>:9092";
+String topic = "first_topic";
+String message = "hello world!";
+
+Properties properties = new Properties();
+properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, server);
+properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
+ProducerRecord<String, String> record = new ProducerRecord<String,String>(topic, message);
+producer.send(record);
+producer.close();
 ```
+
+## Test
+
+Start a consumer, like:
+
+```
+bin/kafka-console-consumer.sh --bootstrap-server <you.server.ip.address>:9092 --topic first_topic
+```
+
+Run this app.
